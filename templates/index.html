@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Sound</title>
+  <style>
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+html,body{
+  display: grid;
+  height: 100%;
+  place-items: center;
+  text-align: center;
+  background-image: url('/bg'); 
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: #f0f0f0;
+}
+.wrapper{
+  background: #fff;
+  padding: 20px 30px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
+}
+.wrapper .text{
+  font-size: 35px;
+  font-weight: 700;
+}
+.wrapper p{
+  font-size: 20px;
+  font-weight: 650;
+  line-height: 20px;
+}
+.wrapper .btns{
+  display: flex;
+  margin: 30px 0 20px 0;
+}
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #soundInfo {
+      margin-top: 20px;
+    }
+
+    #uploadSound {
+      background-color: #2196F3;
+    }
+
+    #tryApi {
+      background-color: #f44336;
+    }
+        #audioPreviewContainer {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    #audioPreview {
+      width: 100%;
+      max-width: 400px;
+    }
+
+.button-74 {
+  background-color: #fbeee0;
+  border: 2px solid #422800;
+  border-radius: 30px;
+  box-shadow: #422800 4px 4px 0 0;
+  margin: 10px;
+  color: #422800;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 0 18px;
+  line-height: 50px;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-74:hover {
+  background-color: #fff;
+}
+
+.button-74:active {
+  box-shadow: #422800 2px 2px 0 0;
+  transform: translate(2px, 2px);
+}
+
+@media (min-width: 768px) {
+  .button-74 {
+    min-width: 120px;
+    padding: 0 25px;
+  }
+}
+  </style>
+</head>
+<body>
+ <div class="wrapper">
+         <div class="text">
+            Generate Sound
+         </div>
+         <p>
+            using HTML CSS & JavaScript
+         </p>
+
+  <button class="button-74" id="getRandomSound">Generate Random Sound</button>
+  <div id="soundInfo">
+  <p>Sound URL: <a href="#" id="soundUrl" target="_blank"></a></p>
+</div>
+  <div id="audioPreviewContainer">
+    <audio id="audioPreview" controls="autoplay" style="display: none;"></audio>
+  </div>
+  <a href="/upload">
+    <button class="button-74" id="uploadSound">Upload Your Sound</button>
+  </a>
+  <a href="/api/random-sound">
+    <button class="button-74"id="tryApi">Try API</button>
+  </a>
+  <p>Total Audio Files: <span id="audioCount"></span></p>
+      </div>
+  <script>
+    document.getElementById('getRandomSound').addEventListener('click', function() {
+      fetch('/api/random-sound')
+        .then(response => response.json())
+        .then(data => {
+          const soundUrlElement = document.getElementById('soundUrl');
+soundUrlElement.href = data.url;
+soundUrlElement.textContent ='Kunjungi'
+
+          // Menambahkan URL audio ke elemen audio
+          const audioPreview = document.getElementById('audioPreview');
+          audioPreview.src = data.url;
+          audioPreview.style.display = 'block'; // Tampilkan elemen audio
+
+          // Hentikan pratinjau audio jika sedang berjalan
+          audioPreview.pause();
+        })
+        .catch(error => console.error('Error fetching random sound:', error));
+    });
+
+    // Fungsi untuk mendapatkan jumlah audio
+    function getAudioCount() {
+      fetch('/api/audio-count')
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('audioCount').innerText = data.count;
+        })
+        .catch(error => console.error('Error fetching audio count:', error));
+    }
+
+  setAudioCountInterval = setInterval(getAudioCount, 1000)
+              
+  </script>
+</body>
+</html>
