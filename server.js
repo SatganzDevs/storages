@@ -68,10 +68,6 @@ app.use('/audio', express.static(path.join(__dirname, 'audio')));
 
 // Endpoint to upload audio file
 app.post('/api/upload', upload.single('audio'), function (req, res) {
-  const file = req.file;
-  if (!file) {
-    return res.status(400).json({ error: 'No audio file found.' });
-  }
   res.json({ message: 'Audio file uploaded successfully.' });
 });
 
