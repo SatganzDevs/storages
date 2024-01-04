@@ -36,7 +36,7 @@ app.get('/api/random-sound', function (req, res) {
     const randomFileName = files[randomIndex];
 
     // Buat URL untuk file acak tersebut
-    const randomSoundUrl = `https://storages.satganzdevs.repl.co/audio/${randomFileName}`;
+    const randomSoundUrl = `https://satganz.cyclic.app/audio/${randomFileName}`;
 
     res.json({ status: 200,
               creator: 'SatganzDevs',
